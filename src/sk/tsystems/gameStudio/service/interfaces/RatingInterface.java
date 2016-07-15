@@ -2,7 +2,7 @@ package sk.tsystems.gameStudio.service.interfaces;
 
 import sk.tsystems.gameStudio.entity.Rating;
 
-public interface Ratings {
+public interface RatingInterface {
 
 	public void addRating(Rating rating);
 	

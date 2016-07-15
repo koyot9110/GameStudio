@@ -6,9 +6,9 @@ import java.sql.PreparedStatement;
 
 import sk.tsystems.gameStudio.entity.Score;
 import sk.tsystems.gameStudio.service.exceptions.ScoreException;
-import sk.tsystems.gameStudio.service.interfaces.Scores;
+import sk.tsystems.gameStudio.service.interfaces.ScoreInterface;
 
-public class ScoreImpl implements Scores{
+public class ScoreImpl implements ScoreInterface{
 	
 	public static final String URL = "jdbc:oracle:thin:@//localhost:1521/XE";
 	public static final String USER = "SYSTEM";

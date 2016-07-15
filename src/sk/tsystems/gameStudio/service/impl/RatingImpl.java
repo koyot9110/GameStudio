@@ -6,9 +6,9 @@ import java.sql.PreparedStatement;
 
 import sk.tsystems.gameStudio.entity.Rating;
 import sk.tsystems.gameStudio.service.exceptions.ScoreException;
-import sk.tsystems.gameStudio.service.interfaces.Ratings;
+import sk.tsystems.gameStudio.service.interfaces.RatingInterface;
 
-public class RatingImpl implements Ratings{
+public class RatingImpl implements RatingInterface{
 	
 	public static final String URL = "jdbc:oracle:thin:@//localhost:1521/XE";
 	public static final String USER = "SYSTEM";
