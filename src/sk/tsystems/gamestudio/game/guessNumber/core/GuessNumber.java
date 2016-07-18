@@ -68,12 +68,12 @@ public class GuessNumber implements Runnable {
 			Score score = new Score(id, 3, getPlayingSeconds());
 			scoreimpl.addScore(score);
 			System.out.println(scoreimpl.printTopTenScore("GuessNumber"));
-			rating();
-			comment();
+			rating(id);
+			comment(id);
 		}
 	}
 
-	private void rating() {
+	private void rating(int id) {
 		System.out.println("Do you want rate this game? y/n");
 		input = new Scanner(System.in);
 		String option = input.next();
@@ -81,14 +81,14 @@ public class GuessNumber implements Runnable {
 			System.out.println("Please, rate from 0 to 5");
 			input = new Scanner(System.in);
 			int rate = input.nextInt();
-			Rating rating = new Rating(1, 3, rate);
+			Rating rating = new Rating(id, 3, rate);
 			RatingImpl ratingimpl = new RatingImpl();
 			ratingimpl.addRating(rating);
 			System.out.println(ratingimpl.avgRating("GuessNumber"));
 		}
 	}
 
-	private void comment() {
+	private void comment(int id) {
 		System.out.println("Do you want comment this game? y/n");
 		input = new Scanner(System.in);
 		String option = input.next();
@@ -96,7 +96,7 @@ public class GuessNumber implements Runnable {
 			System.out.println("Please, enter your comment: ");
 			input = new Scanner(System.in);
 			String comment = input.nextLine();
-			Comment com = new Comment(1, 3, comment);
+			Comment com = new Comment(id, 3, comment);
 			CommentImpl commentImpl = new CommentImpl();
 			commentImpl.addComment(com);
 			System.out.println(commentImpl.printComments("GuessNumber"));
