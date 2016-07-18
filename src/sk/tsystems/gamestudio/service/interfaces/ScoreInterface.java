@@ -6,6 +6,6 @@ public interface ScoreInterface {
 	
 	public void addScore(Score score);
 	
-	public void printScore();
+	public String printTopTenScore(String game);
 
 }

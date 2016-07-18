@@ -6,8 +6,6 @@ public interface RatingInterface {
 
 	public void addRating(Rating rating);
 	
-	public void avgRating(String game);
-	
-	public void countRating(String game);
+	public String avgRating(String game);
 	
 }

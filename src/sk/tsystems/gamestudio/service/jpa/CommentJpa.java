@@ -17,9 +17,9 @@ public class CommentJpa implements CommentInterface{
 	}
 
 	@Override
-	public void printComments() {
+	public String printComments(String game) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }

@@ -29,20 +29,13 @@ public class Game {
 		
 		switch (key) {
 		case 1:
-			Stone stone = new Stone();
-			stone.run();
+			new Stone().run();
 			break;
 		case 2:
 			new Minesweeper().run();
 			break;
 		case 3:
-			System.out.println("Welcome in game GUESS NUMBER!!!");
-			System.out.println("For exit eneter '-1'");
-			System.out.println("Please enter range for game:");
-			int range = scanner.nextInt();
-			GuessNumber gn = new GuessNumber(range);
-			System.out.println("Enter number beetwen 0 and " + range );
-			gn.run();
+			new GuessNumber().run();
 			break;
 		default:
 			break;

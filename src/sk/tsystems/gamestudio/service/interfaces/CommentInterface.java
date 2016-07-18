@@ -6,6 +6,6 @@ public interface CommentInterface {
 	
 	public void addComment(Comment comment);
 	
-	public void printComments();
+	public String printComments(String game);
 
 }

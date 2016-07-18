@@ -4,7 +4,6 @@ public class Rating {
 	private int playerId;
 	private int gameId;
 	private int rating;
-	private int countRating;
 	
 	public Rating(int playerId, int gameId, int rating) {
 		this.playerId = playerId;
@@ -34,13 +33,5 @@ public class Rating {
 
 	public void setRating(int rating) {
 		this.rating = rating;
-	}
-
-	public int getCountRating() {
-		return countRating;
-	}
-
-	public void setCountRating(int countRating) {
-		this.countRating = countRating;
 	}
 }
