@@ -89,6 +89,6 @@ public class ConsoleUI {
 	}
 
 	private void newField() {
-		field = new Field(2, 2);
+		field = new Field(4, 4);
 	}
 }

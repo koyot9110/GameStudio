@@ -12,12 +12,12 @@ public class Menu {
 
 	public static void main(String[] args) {
 
-//		Game console = new Game();
-//		
-//		do {
-//			console.printMenu();
-//			console.runGames();
-//		} while (true);
+		Game console = new Game();
+		
+		do {
+			console.printMenu();
+			console.runGames();
+		} while (true);
 		
 //		Score df = new Score(22, 2, 15);
 //		

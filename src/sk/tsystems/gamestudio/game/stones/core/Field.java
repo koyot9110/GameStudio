@@ -1,9 +1,7 @@
 package sk.tsystems.gamestudio.game.stones.core;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Random;
 
 import sk.tsystems.gamestudio.game.stones.exception.StonesException;
 
@@ -20,12 +18,15 @@ public class Field implements Serializable {
 	private final int columnCount;
 
 	private long startMillis;
+	
+	Random rnd = new Random();
 
 	public Field(int rowCount, int columnCount) {
 		this.rowCount = rowCount;
 		this.columnCount = columnCount;
 		tiles = new int[rowCount][columnCount];
 		generate();
+		shuffle();
 		startMillis = System.currentTimeMillis();
 	}
 
@@ -40,24 +41,40 @@ public class Field implements Serializable {
 	public int getValueAt(int row, int column) {
 		return tiles[row][column];
 	}
-
+	
 	private void generate() {
-		int count = rowCount * columnCount;
-		List<Integer> values = new ArrayList<>(count);
-		for (int i = 1; i < count; i++) {
-			values.add(i);
-		}
-		values.add(EMPTY_CELL);
-
-		Collections.shuffle(values);
-
-		int index = 0;
-		for (int row = 0; row < rowCount; row++) {
-			for (int column = 0; column < columnCount; column++) {
-				tiles[row][column] = values.get(index);
-				index++;
+		int count = 1;
+		for (int row = 0; row < getRowCount(); row++) {
+			for (int column = 0; column < getColumnCount(); column++) {
+				tiles[row][column] = count;
+				count++;
 			}
 		}
+		tiles[getRowCount()-1][getColumnCount()-1] = EMPTY_CELL;
+	}
+	
+	private void shuffle(){
+		int increment = 0;
+		do {
+			int random = rnd.nextInt(4);
+			switch (random) {
+			case 0:
+				moveUp();
+				break;
+			case 1:
+				moveDown();
+				break;
+			case 2:
+				moveLeft();
+				break;
+			case 3:
+				moveRight();
+				break;
+			default:
+				break;
+			}
+			increment++;
+		} while (increment < 50);
 	}
 
 	private Position getPositionOf(int value) {

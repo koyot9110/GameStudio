@@ -1,6 +1,7 @@
 package sk.tsystems.gamestudio.entity;
 
 public class Rating {
+
 	private int playerId;
 	private int gameId;
 	private int rating;

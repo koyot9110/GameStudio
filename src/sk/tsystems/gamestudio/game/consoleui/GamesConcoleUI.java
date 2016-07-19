@@ -20,8 +20,8 @@ public class GamesConcoleUI {
 		System.out.println("Your score is: " + trueScore);
 		System.out.println("Enter your name:");
 		input = new Scanner(System.in);
-		String name = input.next();
-		int playerId = new PlayerUtil().checkName(name);
+		String playerName = input.next();
+		int playerId = new PlayerUtil().checkName(playerName);
 		int gameId = new GameUtil().checkGame(gameName);
 		ScoreImpl scoreimpl = new ScoreImpl();
 		Score score = new Score(playerId, gameId, trueScore);

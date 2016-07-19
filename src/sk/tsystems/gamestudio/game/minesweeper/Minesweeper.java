@@ -20,7 +20,7 @@ public class Minesweeper implements Runnable{
 	public Minesweeper() {
 		instance = this;
 		userInterface = new ConsoleUI();
-		this.field = new Field(10, 10, 1);
+		this.field = new Field(10, 10, 10);
 	}
 
 	public static Minesweeper getInstance() {

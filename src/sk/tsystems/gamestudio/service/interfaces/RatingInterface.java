@@ -8,6 +8,6 @@ public interface RatingInterface {
 	
 	public String avgRating(String game);
 	
-	public Rating checkRating(Rating rating);
+	public Rating checkRating(Rating rating, String playerName, String gameName);
 	
 }

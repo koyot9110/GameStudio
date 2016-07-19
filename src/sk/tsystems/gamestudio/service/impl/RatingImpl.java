@@ -22,7 +22,7 @@ public class RatingImpl implements RatingInterface {
 
 	public static final String SELECT_CHECK_RATING = "SELECT p.PLAYERNAME, g.GAMENAME, r.rating FROM rating r JOIN game g ON r.GAMEID = g.GAMEID JOIN player p ON r.PLAYERID = p.PLAYERID";
 	
-	public static final String DELETE_RATING = "delete from rating where gameid like ? AND playerid like ?";
+	public static final String DELETE_RATING = "delete from rating where playerid like ? AND gameid like ?";
 	
 	@Override
 	public void addRating(Rating rating) {
@@ -61,14 +61,14 @@ public class RatingImpl implements RatingInterface {
 	}
 	
 	@Override
-	public Rating checkRating(Rating rating) {
+	public Rating checkRating(Rating rating, String playerName, String gameName) {
 		try {
 			Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
 			Statement stmt = con.createStatement();
 			ResultSet res = stmt.executeQuery(SELECT_CHECK_RATING);
 			
 			while (res.next()) {
-				if (res.getInt(1) == rating.getplayerId() && res.getInt(2) == rating.getGameId()) {
+				if (res.getString(1).equals(playerName) && res.getString(2).equals(gameName)) {
 					PreparedStatement stmt1 = con.prepareStatement(DELETE_RATING);
 					stmt1.setInt(1, rating.getplayerId());
 					stmt1.setInt(2, rating.getGameId());
@@ -80,7 +80,7 @@ public class RatingImpl implements RatingInterface {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong select id");
+			throw new ScoreException("Error: Wrong check rating");
 		}
 		return rating;
 	}

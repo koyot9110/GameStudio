@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.service.exceptions.ScoreException;
@@ -18,7 +17,7 @@ public class ScoreImpl implements ScoreInterface {
 
 	public static final String INSERT_SCORE = "INSERT INTO score (SCOREID, PLAYERID, GAMEID, SCORE) VALUES (score_seq.nextval, ?, ?, ?)";
 
-	public static final String SELECT_SCORE = "SELECT * FROM (SELECT p.PLAYERNAME, g.GAMENAME, s.score FROM player p JOIN score s ON p.PLAYERID = s.PLAYERID JOIN game g ON s.GAMEID = g.GAMEID ORDER BY s.score DESC) WHERE ROWNUM <=10";
+	public static final String SELECT_SCORE = "SELECT * FROM (SELECT p.PLAYERNAME, g.GAMENAME, s.score FROM player p JOIN score s ON p.PLAYERID = s.PLAYERID JOIN game g ON s.GAMEID = g.GAMEID ORDER BY s.score DESC) WHERE ROWNUM <=10  AND GAMENAME like ?";
 
 	@Override
 	public void addScore(Score score) {
@@ -39,8 +38,9 @@ public class ScoreImpl implements ScoreInterface {
 	public String printTopTenScore(String game) {
 		try {
 			Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-			Statement stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery(SELECT_SCORE);
+			PreparedStatement stmt = con.prepareStatement(SELECT_SCORE);
+			stmt.setString(1, game);
+			ResultSet res = stmt.executeQuery();
 			StringBuilder builder = new StringBuilder();
 			int index = 0;
 			while (res.next()) {
