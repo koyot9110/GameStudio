@@ -35,6 +35,8 @@ public class Field {
 
 	Random rnd = new Random();
 
+	private long startMillis;
+
 	/**
 	 * Constructor.
 	 *
@@ -51,6 +53,7 @@ public class Field {
 		this.mineCount = mineCount;
 		tiles = new Tile[rowCount][columnCount];
 		generate();
+		startMillis = System.currentTimeMillis();
 	}
 
 	public int getRowCount() {
@@ -138,7 +141,8 @@ public class Field {
 		for (int row = 0; row < getRowCount(); row++) {
 			for (int column = 0; column < getColumnCount(); column++) {
 				if (tiles[row][column] == null) {
-					tiles[row][column] = new Clue(countAdjacentMines(row, column));
+					tiles[row][column] = new Clue(countAdjacentMines(row,
+							column));
 				}
 			}
 		}
@@ -159,6 +163,7 @@ public class Field {
 
 	/**
 	 * Return count tiles by state
+	 * 
 	 * @param state
 	 * @return count
 	 */
@@ -173,16 +178,15 @@ public class Field {
 		}
 		return count;
 	}
-	
-	public int getRemainingMineCount(){
+
+	public int getRemainingMineCount() {
 		return getMineCount() - getNumberOf(State.MARKED);
 	}
-	
 
 	/**
 	 * Open clue around clue with value 0
 	 */
-	private void openAdjacentTiles(int row, int column){
+	private void openAdjacentTiles(int row, int column) {
 		for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
 			int actRow = row + rowOffset;
 			if (actRow >= 0 && actRow < rowCount) {
@@ -197,8 +201,7 @@ public class Field {
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Returns number of adjacent mines for a tile at specified position in the
 	 * field.
@@ -225,5 +228,14 @@ public class Field {
 			}
 		}
 		return count;
+	}
+
+	public int getPlayingSeconds() {
+		return (int) ((System.currentTimeMillis() - startMillis) / 100);
+	}
+
+	public int getScore() {
+		int score = 100000 / getPlayingSeconds();
+		return score;
 	}
 }

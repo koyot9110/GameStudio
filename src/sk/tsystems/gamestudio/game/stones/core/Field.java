@@ -54,7 +54,6 @@ public class Field implements Serializable {
 		int index = 0;
 		for (int row = 0; row < rowCount; row++) {
 			for (int column = 0; column < columnCount; column++) {
-				// tiles[row][column] = values.get(row * columnCount + column);
 				tiles[row][column] = values.get(index);
 				index++;
 			}
@@ -80,7 +79,8 @@ public class Field implements Serializable {
 		Position emptyPosition = getEmptyPosition();
 		int er = emptyPosition.getRow();
 		int ec = emptyPosition.getColumn();
-		if (er + dr >= 0 && er + dr < rowCount && ec + dc >= 0 && ec + dc < columnCount) {
+		if (er + dr >= 0 && er + dr < rowCount && ec + dc >= 0
+				&& ec + dc < columnCount) {
 			tiles[er][ec] = tiles[er + dr][ec + dc];
 			tiles[er + dr][ec + dc] = EMPTY_CELL;
 		}
@@ -109,7 +109,8 @@ public class Field implements Serializable {
 			int dr = pos.getRow() - emptyPosition.getRow();
 			int dc = pos.getColumn() - emptyPosition.getColumn();
 
-			if ((Math.abs(dr) == 1 && dc == 0) || (dr == 0 && Math.abs(dc) == 1)) {
+			if ((Math.abs(dr) == 1 && dc == 0)
+					|| (dr == 0 && Math.abs(dc) == 1)) {
 				move(dr, dc);
 				return true;
 			}
@@ -134,6 +135,11 @@ public class Field implements Serializable {
 	}
 
 	public int getPlayingSeconds() {
-		return (int) ((System.currentTimeMillis() - startMillis) / 1000);
+		return (int) ((System.currentTimeMillis() - startMillis) / 100);
+	}
+	
+	public int getScore() {
+		int score = 100000 / getPlayingSeconds();
+		return score;
 	}
 }

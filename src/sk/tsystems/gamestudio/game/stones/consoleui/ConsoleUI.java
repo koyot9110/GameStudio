@@ -2,6 +2,7 @@ package sk.tsystems.gamestudio.game.stones.consoleui;
 
 import java.util.Scanner;
 
+import sk.tsystems.gamestudio.game.consoleui.GamesConcoleUI;
 import sk.tsystems.gamestudio.game.stones.core.Field;
 
 public class ConsoleUI {
@@ -26,7 +27,7 @@ public class ConsoleUI {
 			processInput();
 		} while (!field.isSolved() && !exit);
 		if (field.isSolved()) {
-			System.out.println("You won the Game!");
+			new GamesConcoleUI().win("Stones", field.getScore());
 		}
 	}
 
@@ -88,6 +89,6 @@ public class ConsoleUI {
 	}
 
 	private void newField() {
-		field = new Field(4, 4);
+		field = new Field(2, 2);
 	}
 }

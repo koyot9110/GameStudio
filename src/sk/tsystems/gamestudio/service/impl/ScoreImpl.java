@@ -18,11 +18,7 @@ public class ScoreImpl implements ScoreInterface {
 
 	public static final String INSERT_SCORE = "INSERT INTO score (SCOREID, PLAYERID, GAMEID, SCORE) VALUES (score_seq.nextval, ?, ?, ?)";
 
-	public static final String SELECT_SCORE = "SELECT * FROM (SELECT p.PLAYERNAME, g.GAMENAME, s.score FROM player p JOIN score s ON p.PLAYERID = s.PLAYERID JOIN game g ON s.GAMEID = g.GAMEID ORDER BY s.score) WHERE ROWNUM <=10";
-
-	public static final String SELECT_PLAYER = "SELECT playerid FROM PLAYER WHERE PLAYERNAME like ? ";
-
-	public static final String INSERT_PLAYER = "INSERT INTO PLAYER (PLAYERID,PLAYERNAME) VALUES (PLAYER_SEQ.NEXTVAL,?)";
+	public static final String SELECT_SCORE = "SELECT * FROM (SELECT p.PLAYERNAME, g.GAMENAME, s.score FROM player p JOIN score s ON p.PLAYERID = s.PLAYERID JOIN game g ON s.GAMEID = g.GAMEID ORDER BY s.score DESC) WHERE ROWNUM <=10";
 
 	@Override
 	public void addScore(Score score) {
@@ -52,7 +48,7 @@ public class ScoreImpl implements ScoreInterface {
 					index++;
 					builder.append(index + ". " + "PLAYER: " + res.getString(1)
 							+ ", GAME: " + res.getString(2) + ", SCORE: "
-							+ res.getInt(3) + "sec.\n");
+							+ res.getInt(3) + "\n");
 				}
 			}
 			return builder.toString();
@@ -60,31 +56,5 @@ public class ScoreImpl implements ScoreInterface {
 			e.printStackTrace();
 			throw new ScoreException("Error: Wrong print score");
 		}
-	}
-
-	public int checkName(String name) {
-		int playerID = 0;
-		try {
-			Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-			PreparedStatement stmt = con.prepareStatement(SELECT_PLAYER);
-			stmt.setString(1, name);
-			ResultSet res = stmt.executeQuery();
-			
-			while (res.next()) {
-				playerID = res.getInt(1);
-			}
-			
-			if (playerID == 0) {
-				PreparedStatement stmt1 = con.prepareStatement(INSERT_PLAYER);
-				stmt1.setString(1, name);
-				stmt1.executeUpdate();
-				checkName(name);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ScoreException("Error: Wrong select id");
-		}
-		return playerID;
 	}
 }

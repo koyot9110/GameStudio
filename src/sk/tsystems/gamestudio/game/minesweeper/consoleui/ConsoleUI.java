@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import sk.tsystems.gamestudio.game.consoleui.GamesConcoleUI;
 import sk.tsystems.gamestudio.game.minesweeper.UserInterface;
 import sk.tsystems.gamestudio.game.minesweeper.core.Clue;
 import sk.tsystems.gamestudio.game.minesweeper.core.Field;
@@ -55,7 +56,7 @@ public class ConsoleUI implements UserInterface {
 			processInput();
 			if (field.getState() == GameState.SOLVED) {
 				update();
-				System.out.println("You won!!! CONGRATULATION!!!");
+				new GamesConcoleUI().win("Minesweeper", field.getScore());
 				exit = false;
 			} else if (field.getState() == GameState.FAILED) {
 				update();
