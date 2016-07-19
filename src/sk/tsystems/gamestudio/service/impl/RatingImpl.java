@@ -20,7 +20,7 @@ public class RatingImpl implements RatingInterface {
 
 	public static final String SELECT_AVG_RATING = "SELECT g.gamename, AVG(r.rating) AS avg, COUNT(r.rating) AS count FROM rating r JOIN game g ON r.GAMEID = g.GAMEID GROUP BY g.GAMENAME";
 
-	public static final String SELECT_CHECK_RATING = "SELECT p.PLAYERNAME, g.GAMENAME, r.rating FROM rating r JOIN game g ON r.GAMEID = g.GAMEID JOIN player p ON r.PLAYERID = p.PLAYERID";
+	public static final String SELECT_CHECK_RATING = "SELECT p.PLAYERNAME, g.GAMENAME, r.rating FROM rating r JOIN game g ON r.GAMEID = g.GAMEID JOIN player p ON r.PLAYERID = p.PLAYERID WHERE p.PLAYERNAME like ? AND g.GAMENAME like ?";
 	
 	public static final String DELETE_RATING = "delete from rating where playerid like ? AND gameid like ?";
 	
@@ -64,18 +64,19 @@ public class RatingImpl implements RatingInterface {
 	public Rating checkRating(Rating rating, String playerName, String gameName) {
 		try {
 			Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-			Statement stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery(SELECT_CHECK_RATING);
+			PreparedStatement stmt = con.prepareStatement(SELECT_CHECK_RATING);
+			stmt.setString(1, playerName);
+			stmt.setString(2, gameName);
+			ResultSet res = stmt.executeQuery();
 			
-			while (res.next()) {
-				if (res.getString(1).equals(playerName) && res.getString(2).equals(gameName)) {
-					PreparedStatement stmt1 = con.prepareStatement(DELETE_RATING);
-					stmt1.setInt(1, rating.getplayerId());
-					stmt1.setInt(2, rating.getGameId());
-					stmt1.executeUpdate();
-				} else {
-					addRating(rating);
-				}
+			if (!res.next()) {
+				addRating(rating);
+			} else {
+				con.prepareStatement(DELETE_RATING);
+				stmt.setInt(1, rating.getplayerId());
+				stmt.setInt(2, rating.getGameId());
+				stmt.executeUpdate();
+				addRating(rating);
 			}
 			
 		} catch (Exception e) {

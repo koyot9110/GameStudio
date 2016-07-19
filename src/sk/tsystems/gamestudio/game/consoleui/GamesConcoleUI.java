@@ -27,11 +27,11 @@ public class GamesConcoleUI {
 		Score score = new Score(playerId, gameId, trueScore);
 		scoreimpl.addScore(score);
 		System.out.println(scoreimpl.printTopTenScore(gameName));
-		rating(playerId, gameId, gameName);
+		rating(playerId, gameId, playerName, gameName);
 		comment(playerId, gameId, gameName);
 	}
 
-	private void rating(int playerId, int gameId, String gameName) {
+	private void rating(int playerId, int gameId, String playerName,String gameName) {
 		System.out.println("Do you want rate this game?  Press 'y' for yes");
 		input = new Scanner(System.in);
 		String option = input.next();
@@ -41,7 +41,7 @@ public class GamesConcoleUI {
 			int rate = input.nextInt();
 			Rating rating = new Rating(playerId, gameId, rate);
 			RatingImpl ratingimpl = new RatingImpl();
-			ratingimpl.addRating(rating);
+			ratingimpl.checkRating(rating, playerName, gameName);
 			System.out.println(ratingimpl.avgRating(gameName));
 		}
 	}
