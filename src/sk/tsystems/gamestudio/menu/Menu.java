@@ -17,14 +17,18 @@ public class Menu {
 //		} while (true);
 		
 		
-//		Comments comment = new Comments(1, 1, "Mozno to pojde, ale pravdepodobne asi nie");
-//		CommentJpa cj = new CommentJpa();
-//		cj.addComment(comment);
+		Comments comment = new Comments(1, 1, "Mozno to pojde, ale pravdepodobne asi nie");
+		CommentJpa cj = new CommentJpa();
+		cj.addComment(comment);
+		
+		cj.printComments("Stones");
 		
 		
-		Score score = new Score(1, 1, 1500);
-		ScoreJpa sj = new ScoreJpa();
-		sj.addScore(score);
+//		Score score = new Score(1, 1, 1500);
+//		ScoreJpa sj = new ScoreJpa();
+//		sj.addScore(score);
+		
+		
 		
 		
 		
