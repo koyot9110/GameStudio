@@ -2,9 +2,9 @@ package sk.tsystems.gamestudio.service.jpa;
 
 import javax.persistence.EntityManager;
 
-import sk.ness.jpa.JpaHelper;
 import sk.tsystems.gamestudio.entity.Comment;
 import sk.tsystems.gamestudio.service.interfaces.CommentInterface;
+import sk.tsystems.jpa.JpaHelper;
 
 public class CommentJpa implements CommentInterface{
 
@@ -21,5 +21,4 @@ public class CommentJpa implements CommentInterface{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

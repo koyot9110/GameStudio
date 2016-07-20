@@ -2,6 +2,7 @@ package sk.tsystems.gamestudio.entity;
 
 public class Score {
 
+	private int scoreId;
 	private int playerId;
 	private int gameId;
 	private int score;
@@ -12,6 +13,18 @@ public class Score {
 		this.score = score;
 	}
 	
+	public Score(){
+		
+	}
+	
+	public int getScoreId() {
+		return scoreId;
+	}
+
+	public void setScoreId(int scoreId) {
+		this.scoreId = scoreId;
+	}
+
 	public int getplayerId() {
 		return playerId;
 	}

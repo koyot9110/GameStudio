@@ -1,4 +1,4 @@
-package sk.ness.jpa;
+package sk.tsystems.jpa;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

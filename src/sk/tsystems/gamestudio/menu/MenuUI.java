@@ -6,7 +6,7 @@ import sk.tsystems.gamestudio.game.guessNumber.core.GuessNumber;
 import sk.tsystems.gamestudio.game.minesweeper.Minesweeper;
 import sk.tsystems.gamestudio.game.stones.Stone;
 
-public class Game {
+public class MenuUI {
 	
 	private Scanner scanner = new Scanner(System.in);
 	

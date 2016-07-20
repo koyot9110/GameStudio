@@ -1,7 +1,15 @@
 package sk.tsystems.gamestudio.entity;
 
-public class Comment {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class Comment {
+	
+	@Id
+	@GeneratedValue
+	private int commentId;
 	private int playerId;
 	private int gameId;
 	private String comment;
@@ -10,6 +18,18 @@ public class Comment {
 		this.playerId = playerId;
 		this.gameId = gameId;
 		this.comment = comment;
+	}
+	
+	public Comment(){
+		
+	}
+	
+	public int getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(int commentId) {
+		this.commentId = commentId;
 	}
 
 	public int getplayerId() {

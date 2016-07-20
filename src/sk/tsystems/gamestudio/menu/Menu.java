@@ -12,7 +12,7 @@ public class Menu {
 
 	public static void main(String[] args) {
 
-		Game console = new Game();
+		MenuUI console = new MenuUI();
 		
 		do {
 			console.printMenu();
