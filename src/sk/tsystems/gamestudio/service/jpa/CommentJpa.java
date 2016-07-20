@@ -47,7 +47,6 @@ public class CommentJpa implements CommentInterface{
 		query.setParameter("name", game);
 		System.out.println(query.getResultList());
 
-		
 		return null;
 	}
 }
