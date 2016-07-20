@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import sk.tsystems.gamestudio.entity.Comment;
+import sk.tsystems.gamestudio.entity.Comments;
 import sk.tsystems.gamestudio.service.exceptions.ServiceException;
 import sk.tsystems.gamestudio.service.interfaces.CommentInterface;
 
@@ -21,7 +21,7 @@ public class CommentImpl implements CommentInterface {
 	public static final String SELECT_COMMENTS = "SELECT p.PLAYERNAME, g.GAMENAME, c.comments FROM player p JOIN comments c ON p.PLAYERID = c.PLAYERID JOIN game g ON c.GAMEID = g.GAMEID WHERE c.COMMENTS IS NOT NULL";
 
 	@Override
-	public void addComment(Comment comment) {
+	public void addComment(Comments comment) {
 
 		try {
 			Connection con = DriverManager.getConnection(URL, USER, PASSWORD);

@@ -2,7 +2,7 @@ package sk.tsystems.gamestudio.game.consoleui;
 
 import java.util.Scanner;
 
-import sk.tsystems.gamestudio.entity.Comment;
+import sk.tsystems.gamestudio.entity.Comments;
 import sk.tsystems.gamestudio.entity.Rating;
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.service.impl.CommentImpl;
@@ -54,7 +54,7 @@ public class GamesConcoleUI {
 			System.out.println("Please, enter your comment: ");
 			input = new Scanner(System.in);
 			String comment = input.nextLine();
-			Comment com = new Comment(playerId, gameId, comment);
+			Comments com = new Comments(playerId, gameId, comment);
 			CommentImpl commentImpl = new CommentImpl();
 			commentImpl.addComment(com);
 			System.out.println(commentImpl.printComments(gameName));

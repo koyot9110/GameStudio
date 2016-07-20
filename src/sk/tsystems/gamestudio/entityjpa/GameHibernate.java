@@ -1,11 +1,11 @@
-package sk.tsystems.gamestudio.entity;
+package sk.tsystems.gamestudio.entityjpa;
 
-public class Game {
+public class GameHibernate {
 
 	private int gameId;
 	private String gameName;
 	
-	public Game() {
+	public GameHibernate() {
 
 	}
 	

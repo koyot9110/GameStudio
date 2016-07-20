@@ -11,10 +11,6 @@ public class Rating {
 		this.gameId = gameId;
 		this.rating = rating;
 	}
-	
-	public Rating(){
-		
-	}
 
 	public int getplayerId() {
 		return playerId;
