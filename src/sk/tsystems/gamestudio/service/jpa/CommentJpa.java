@@ -1,5 +1,7 @@
 package sk.tsystems.gamestudio.service.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -32,21 +34,14 @@ public class CommentJpa implements CommentInterface{
 	}
 
 	@Override
-	public String printComments(String game) {
+	public List<String> printComments(String game) {
 		CommentsHibernate comHib = new CommentsHibernate();
-		
-//		GameHibernate gameHib = new GameHibernate();
-//		gameHib.setGameName(game);
-//		comHib.setGame(gameHib);
 		
 		JpaHelper.beginTransaction();
 		EntityManager em = JpaHelper.getEntityManager();
 		em.persist(comHib);
-		Query query = em
-				.createQuery("SELECT p.PLAYERNAME, g.GAMENAME, c.comments FROM playerhibernate p, commentshibernate c, gamehibernate g WHERE c.playerid = p.playerid AND c.gameid = g.gameid AND g.name=:name");
-		query.setParameter("name", game);
-		System.out.println(query.getResultList());
+		JpaHelper.commitTransaction();
 
-		return null;
+		return em.createQuery("Select c from Comment c JOIN c.hra h where h.name=:gameName").setParameter("gameName", game).getResultList();
 	}
 }

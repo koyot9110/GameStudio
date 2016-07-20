@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import sk.tsystems.gamestudio.entity.Comments;
 import sk.tsystems.gamestudio.service.exceptions.ServiceException;
@@ -37,19 +39,19 @@ public class CommentImpl implements CommentInterface {
 	}
 
 	@Override
-	public String printComments(String game) {
+	public List<String> printComments(String game) {
+		List<String> list = new ArrayList<String>();
 		try {
 			Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
 			Statement stmt = con.createStatement();
 			ResultSet res = stmt.executeQuery(SELECT_COMMENTS);
-			StringBuilder builder = new StringBuilder();
 			while (res.next()) {
 				if (res.getString(2).equals(game)) {
-					builder.append("PLAYER: " + res.getString(1) + ", GAME: " + res.getString(2)
+					list.add("PLAYER: " + res.getString(1) + ", GAME: " + res.getString(2)
 							+ ", COMMENT: " + res.getString(3) + "\n");
 				}
 			}
-			return builder.toString();
+			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ServiceException("Error: Wrong print comments");
