@@ -10,6 +10,12 @@ public class RatingJpa implements RatingInterface{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void deleteRating(Rating rating) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public String avgRating(String game) {
@@ -21,11 +27,5 @@ public class RatingJpa implements RatingInterface{
 	public Rating checkRating(Rating rating, String playerName, String gameName) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void deleteRating(Rating rating) {
-		// TODO Auto-generated method stub
-		
 	}
 }

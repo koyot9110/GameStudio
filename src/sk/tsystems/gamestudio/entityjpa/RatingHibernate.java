@@ -1,10 +1,16 @@
 package sk.tsystems.gamestudio.entityjpa;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class RatingHibernate {
+	
+	@Id
+	@GeneratedValue
+	private int ratingId;
 	
 	@ManyToOne
 	private PlayerHibernate player;

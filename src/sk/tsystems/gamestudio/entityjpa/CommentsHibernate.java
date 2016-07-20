@@ -17,7 +17,7 @@ public class CommentsHibernate {
 	
 	@ManyToOne
 	private GameHibernate game;
-	private String comment;
+	private String comments;
 	
 	public CommentsHibernate(){
 		
@@ -48,10 +48,10 @@ public class CommentsHibernate {
 	}
 
 	public String getComment() {
-		return comment;
+		return comments;
 	}
 
 	public void setComment(String comment) {
-		this.comment = comment;
+		this.comments = comment;
 	}
 }

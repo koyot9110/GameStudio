@@ -1,7 +1,14 @@
 package sk.tsystems.gamestudio.entityjpa;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class GameHibernate {
 
+	@Id
+	@GeneratedValue
 	private int gameId;
 	private String gameName;
 	
