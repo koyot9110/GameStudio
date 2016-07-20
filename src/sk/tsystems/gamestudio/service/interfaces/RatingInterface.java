@@ -10,4 +10,6 @@ public interface RatingInterface {
 	
 	public Rating checkRating(Rating rating, String playerName, String gameName);
 	
+	public void deleteRating(Rating rating);
+	
 }
