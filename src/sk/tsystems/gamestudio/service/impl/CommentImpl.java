@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import sk.tsystems.gamestudio.entity.Comment;
-import sk.tsystems.gamestudio.service.exceptions.ScoreException;
+import sk.tsystems.gamestudio.service.exceptions.ServiceException;
 import sk.tsystems.gamestudio.service.interfaces.CommentInterface;
 
 public class CommentImpl implements CommentInterface {
@@ -32,7 +32,7 @@ public class CommentImpl implements CommentInterface {
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong insert comment");
+			throw new ServiceException("Error: Wrong insert comment");
 		}
 	}
 
@@ -52,7 +52,7 @@ public class CommentImpl implements CommentInterface {
 			return builder.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong print comments");
+			throw new ServiceException("Error: Wrong print comments");
 		}
 	}
 }

@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import sk.tsystems.gamestudio.entity.Rating;
-import sk.tsystems.gamestudio.service.exceptions.ScoreException;
+import sk.tsystems.gamestudio.service.exceptions.ServiceException;
 import sk.tsystems.gamestudio.service.interfaces.RatingInterface;
 
 public class RatingImpl implements RatingInterface {
@@ -35,7 +35,7 @@ public class RatingImpl implements RatingInterface {
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong insert rating");
+			throw new ServiceException("Error: Wrong insert rating");
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class RatingImpl implements RatingInterface {
 		stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong delete rating");
+			throw new ServiceException("Error: Wrong delete rating");
 		}
 	}
 
@@ -69,7 +69,7 @@ public class RatingImpl implements RatingInterface {
 			return builder.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong avg rating");
+			throw new ServiceException("Error: Wrong avg rating");
 		}
 	}
 	
@@ -91,7 +91,7 @@ public class RatingImpl implements RatingInterface {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong check rating");
+			throw new ServiceException("Error: Wrong check rating");
 		}
 		return rating;
 	}

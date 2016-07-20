@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import sk.tsystems.gamestudio.service.exceptions.ScoreException;
+import sk.tsystems.gamestudio.service.exceptions.ServiceException;
 
 public class GameUtil {
 private int gameId;
@@ -38,7 +38,7 @@ private int gameId;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong select game id");
+			throw new ServiceException("Error: Wrong select game id");
 		}
 		return gameId;
 	}

@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import sk.tsystems.gamestudio.entity.Score;
-import sk.tsystems.gamestudio.service.exceptions.ScoreException;
+import sk.tsystems.gamestudio.service.exceptions.ServiceException;
 import sk.tsystems.gamestudio.service.interfaces.ScoreInterface;
 
 public class ScoreImpl implements ScoreInterface {
@@ -30,7 +30,7 @@ public class ScoreImpl implements ScoreInterface {
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong insert score");
+			throw new ServiceException("Error: Wrong insert score");
 		}
 	}
 
@@ -54,7 +54,7 @@ public class ScoreImpl implements ScoreInterface {
 			return builder.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ScoreException("Error: Wrong print score");
+			throw new ServiceException("Error: Wrong print score");
 		}
 	}
 }
