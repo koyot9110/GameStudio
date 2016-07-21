@@ -34,14 +34,25 @@ public class CommentJpa implements CommentInterface{
 	}
 
 	@Override
-	public List<String> printComments(String game) {
-		CommentsHibernate comHib = new CommentsHibernate();
+	public List<Comments> printComments(String game) {
 		
 		JpaHelper.beginTransaction();
 		EntityManager em = JpaHelper.getEntityManager();
-		em.persist(comHib);
 		JpaHelper.commitTransaction();
 
-		return em.createQuery("Select c from Comment c JOIN c.hra h where h.name=:gameName").setParameter("gameName", game).getResultList();
+		Query query = em.createQuery("SELECT c FROM CommentsHibernate c JOIN c.game g where g.gameName=:gameName");
+		query.setParameter("gameName", game);
+		return query.getResultList();
+	}
+	
+	public List<CommentsHibernate> printComment(String game) {
+
+		JpaHelper.beginTransaction();
+		EntityManager em = JpaHelper.getEntityManager();
+		JpaHelper.commitTransaction();
+
+		Query query = em.createQuery("SELECT c FROM CommentsHibernate c JOIN c.game g where g.gameName=:gameName");
+		query.setParameter("gameName", game);
+		return query.getResultList();
 	}
 }

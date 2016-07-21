@@ -20,7 +20,7 @@ public class CommentImpl implements CommentInterface {
 
 	public static final String INSERT_COMMENT = "INSERT INTO comments (COMMENTID, PLAYERID, GAMEID, COMMENTS) VALUES (comment_seq.nextval, ?, ?, ?)";
 
-	public static final String SELECT_COMMENTS = "SELECT p.PLAYERNAME, g.GAMENAME, c.comments FROM player p JOIN comments c ON p.PLAYERID = c.PLAYERID JOIN game g ON c.GAMEID = g.GAMEID WHERE c.COMMENTS IS NOT NULL";
+	public static final String SELECT_COMMENTS = "SELECT p.PLAYERNAME, g.GAMENAME, c.COMMENTS FROM player p JOIN comments c ON p.PLAYERID = c.PLAYERID JOIN game g ON c.GAMEID = g.GAMEID WHERE c.COMMENTS IS NOT NULL AND g.GAMENAME like ?";
 
 	@Override
 	public void addComment(Comments comment) {
@@ -39,16 +39,17 @@ public class CommentImpl implements CommentInterface {
 	}
 
 	@Override
-	public List<String> printComments(String game) {
-		List<String> list = new ArrayList<String>();
+	public List<Comments> printComments(String game) {
+		List<Comments> list = new ArrayList<Comments>();
 		try {
 			Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-			Statement stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery(SELECT_COMMENTS);
+			PreparedStatement stmt = con.prepareStatement(SELECT_COMMENTS);
+			stmt.setString(1, game);
+			stmt.executeUpdate();
+			ResultSet res = stmt.executeQuery();
 			while (res.next()) {
 				if (res.getString(2).equals(game)) {
-					list.add("PLAYER: " + res.getString(1) + ", GAME: " + res.getString(2)
-							+ ", COMMENT: " + res.getString(3) + "\n");
+					list.add(new Comments(res.getString(1), res.getString(3)));
 				}
 			}
 			return list;

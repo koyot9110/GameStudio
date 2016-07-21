@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.service.exceptions.ServiceException;
@@ -35,23 +37,19 @@ public class ScoreImpl implements ScoreInterface {
 	}
 
 	@Override
-	public String printTopTenScore(String game) {
+	public List<Score> printTopTenScore(String game) {
+		List<Score> list = new ArrayList<Score>();
 		try {
 			Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
 			PreparedStatement stmt = con.prepareStatement(SELECT_SCORE);
 			stmt.setString(1, game);
 			ResultSet res = stmt.executeQuery();
-			StringBuilder builder = new StringBuilder();
-			int index = 0;
 			while (res.next()) {
 				if (res.getString(2).equals(game)) {
-					index++;
-					builder.append(index + ". " + "PLAYER: " + res.getString(1)
-							+ ", GAME: " + res.getString(2) + ", SCORE: "
-							+ res.getInt(3) + "\n");
+					list.add(new Score(res.getString(1), res.getInt(3)));
 				}
 			}
-			return builder.toString();
+			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ServiceException("Error: Wrong print score");

@@ -4,11 +4,18 @@ public class Score {
 
 	private int playerId;
 	private int gameId;
+	private String playerName;
 	private int score;
 	
 	public Score(int playerId, int gameId, int score) {
 		this.playerId = playerId;
 		this.gameId = gameId;
+		this.score = score;
+	}
+
+	public Score(String playerName, int score) {
+		super();
+		this.playerName = playerName;
 		this.score = score;
 	}
 
@@ -28,6 +35,14 @@ public class Score {
 		this.gameId = gameId;
 	}
 
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+	
 	public int getScore() {
 		return score;
 	}

@@ -12,6 +12,10 @@ public class Rating {
 		this.rating = rating;
 	}
 
+	public Rating(int rating) {
+		this.rating = rating;
+	}
+
 	public int getplayerId() {
 		return playerId;
 	}

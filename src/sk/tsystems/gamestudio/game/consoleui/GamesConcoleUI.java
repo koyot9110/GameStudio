@@ -1,5 +1,6 @@
 package sk.tsystems.gamestudio.game.consoleui;
 
+import java.util.List;
 import java.util.Scanner;
 
 import sk.tsystems.gamestudio.entity.Comments;
@@ -21,12 +22,20 @@ public class GamesConcoleUI {
 		System.out.println("Enter your name:");
 		input = new Scanner(System.in);
 		String playerName = input.next();
+		
 		int playerId = new PlayerUtil().checkName(playerName);
 		int gameId = new GameUtil().checkGame(gameName);
+		
 		ScoreImpl scoreimpl = new ScoreImpl();
 		Score score = new Score(playerId, gameId, trueScore);
 		scoreimpl.addScore(score);
-		System.out.println(scoreimpl.printTopTenScore(gameName));
+		
+		List<Score> scoreList = scoreimpl.printTopTenScore(gameName);
+		System.out.println("Score for game: " + gameName);
+		for (int i = 0; i < scoreList.size(); i++) {
+			System.out.println(i + ". " + scoreList.get(i).getPlayerName() + " - " + scoreList.get(i).getScore());
+		}
+		System.out.println();
 		rating(playerId, gameId, playerName, gameName);
 		comment(playerId, gameId, gameName);
 	}
@@ -36,13 +45,21 @@ public class GamesConcoleUI {
 		input = new Scanner(System.in);
 		String option = input.next();
 		if (option.equals("y")) {
+			
 			System.out.println("Please, rate from 0 to 5");
 			input = new Scanner(System.in);
 			int rate = input.nextInt();
+			
 			Rating rating = new Rating(playerId, gameId, rate);
 			RatingImpl ratingimpl = new RatingImpl();
 			ratingimpl.checkRating(rating, playerName, gameName);
-			System.out.println(ratingimpl.avgRating(gameName));
+			
+			List<Rating> avgList = ratingimpl.avgRating(gameName);
+			List<Rating> countList = ratingimpl.countRating(gameName);
+			System.out.println("Rating for game: " + gameName);
+			for (int i = 0; i < avgList.size(); i++) {
+				System.out.println("Average rating: " + avgList.get(i).getRating() + " Count rating: " + countList.get(i).getRating() + "\n\n");
+			}
 		}
 	}
 
@@ -51,13 +68,21 @@ public class GamesConcoleUI {
 		input = new Scanner(System.in);
 		String option = input.next();
 		if (option.equals("y")) {
+			
 			System.out.println("Please, enter your comment: ");
 			input = new Scanner(System.in);
 			String comment = input.nextLine();
+			
 			Comments com = new Comments(playerId, gameId, comment);
 			CommentImpl commentImpl = new CommentImpl();
 			commentImpl.addComment(com);
-			System.out.println(commentImpl.printComments(gameName));
+			
+			List<Comments> commentList = commentImpl.printComments(gameName);
+			System.out.println("Comments for game: " + gameName);
+			for (int i = 0; i < commentList.size(); i++) {
+				System.out.println(commentList.get(i).getPlayerName() + ": " + commentList.get(i).getComment());
+			}
+			System.out.println();
 		}
 	}
 }

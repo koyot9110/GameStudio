@@ -1,6 +1,9 @@
 package sk.tsystems.gamestudio.service.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import sk.tsystems.gamestudio.entity.Score;
 import sk.tsystems.gamestudio.entityjpa.GameHibernate;
@@ -31,8 +34,13 @@ public class ScoreJpa implements ScoreInterface{
 	}
 
 	@Override
-	public String printTopTenScore(String game) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Score> printTopTenScore(String game) {
+		JpaHelper.beginTransaction();
+		EntityManager em = JpaHelper.getEntityManager();
+		JpaHelper.commitTransaction();
+
+		Query query = em.createQuery("SELECT s FROM ScoreHibernate c JOIN c.game g where g.gameName=:gameName");
+		query.setParameter("gameName", game);
+		return query.getResultList();
 	}
 }
