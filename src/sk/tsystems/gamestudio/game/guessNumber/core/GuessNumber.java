@@ -57,6 +57,26 @@ public class GuessNumber implements Runnable {
 		}
 	}
 
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public int getNumberToGuess() {
+		return numberToGuess;
+	}
+
+	public void setNumberToGuess(int numberToGuess) {
+		this.numberToGuess = numberToGuess;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+
 	public int getPlayingSeconds() {
 		return (int) ((System.currentTimeMillis() - startMillis) / 100);
 	}
