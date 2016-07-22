@@ -16,6 +16,7 @@ public class CommentJpa implements CommentInterface{
 
 	@Override
 	public void addComment(Comments comment) {
+		
 		CommentsHibernate comHib = new CommentsHibernate();
 		comHib.setComment(comment.getComment());
 		
@@ -35,7 +36,7 @@ public class CommentJpa implements CommentInterface{
 
 	@Override
 	public List<Comments> printComments(String game) {
-		
+
 		JpaHelper.beginTransaction();
 		EntityManager em = JpaHelper.getEntityManager();
 		JpaHelper.commitTransaction();

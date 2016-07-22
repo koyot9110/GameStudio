@@ -16,6 +16,7 @@ public class ScoreJpa implements ScoreInterface{
 
 	@Override
 	public void addScore(Score score) {
+		
 		ScoreHibernate scoreHib = new ScoreHibernate();
 		scoreHib.setScore(score.getScore());
 		
@@ -35,6 +36,18 @@ public class ScoreJpa implements ScoreInterface{
 
 	@Override
 	public List<Score> printTopTenScore(String game) {
+		
+		JpaHelper.beginTransaction();
+		EntityManager em = JpaHelper.getEntityManager();
+		JpaHelper.commitTransaction();
+
+		Query query = em.createQuery("SELECT s FROM ScoreHibernate c JOIN c.game g where g.gameName=:gameName");
+		query.setParameter("gameName", game);
+		return query.getResultList();
+	}
+	
+	public List<ScoreHibernate> printTopTenScores(String game) {
+		
 		JpaHelper.beginTransaction();
 		EntityManager em = JpaHelper.getEntityManager();
 		JpaHelper.commitTransaction();
