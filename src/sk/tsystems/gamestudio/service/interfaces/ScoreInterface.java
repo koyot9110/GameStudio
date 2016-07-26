@@ -2,12 +2,12 @@ package sk.tsystems.gamestudio.service.interfaces;
 
 import java.util.List;
 
-import sk.tsystems.gamestudio.entity.Score;
+import sk.tsystems.gamestudio.entityjpa.ScoreHibernate;
 
 public interface ScoreInterface {
 	
-	public void addScore(Score score);
+	public void addScore(ScoreHibernate score);
 	
-	public List<Score> printTopTenScore(String game);
+	public List<ScoreHibernate> printTopTenScore(String game);
 
 }

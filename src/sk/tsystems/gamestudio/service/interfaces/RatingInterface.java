@@ -2,18 +2,16 @@ package sk.tsystems.gamestudio.service.interfaces;
 
 import java.util.List;
 
-import sk.tsystems.gamestudio.entity.Rating;
+import sk.tsystems.gamestudio.entityjpa.RatingHibernate;
 
 public interface RatingInterface {
 
-	public void addRating(Rating rating);
+	public void addRating(RatingHibernate rating);
 	
-	public void deleteRating(Rating rating);
+	public double avgRating(String game);
 	
-	public List<Rating> avgRating(String game);
+	public long countRating(String game);
 	
-	public List<Rating> countRating(String game);
-	
-	public Rating checkRating(Rating rating, String playerName, String gameName);
+	public RatingHibernate checkRating(RatingHibernate rating, String playerName, String gameName);
 	
 }

@@ -3,14 +3,16 @@ package sk.tsystems.gamestudio.game.consoleui;
 import java.util.List;
 import java.util.Scanner;
 
-import sk.tsystems.gamestudio.entity.Comments;
-import sk.tsystems.gamestudio.entity.Rating;
-import sk.tsystems.gamestudio.entity.Score;
-import sk.tsystems.gamestudio.service.impl.CommentImpl;
-import sk.tsystems.gamestudio.service.impl.GameUtil;
-import sk.tsystems.gamestudio.service.impl.PlayerUtil;
-import sk.tsystems.gamestudio.service.impl.RatingImpl;
-import sk.tsystems.gamestudio.service.impl.ScoreImpl;
+import sk.tsystems.gamestudio.entityjpa.CommentsHibernate;
+import sk.tsystems.gamestudio.entityjpa.GameHibernate;
+import sk.tsystems.gamestudio.entityjpa.PlayerHibernate;
+import sk.tsystems.gamestudio.entityjpa.RatingHibernate;
+import sk.tsystems.gamestudio.entityjpa.ScoreHibernate;
+import sk.tsystems.gamestudio.service.jpa.CommentJpa;
+import sk.tsystems.gamestudio.service.jpa.GameJpa;
+import sk.tsystems.gamestudio.service.jpa.PlayerJpa;
+import sk.tsystems.gamestudio.service.jpa.RatingJpa;
+import sk.tsystems.gamestudio.service.jpa.ScoreJpa;
 
 public class GamesConcoleUI {
 	
@@ -23,24 +25,28 @@ public class GamesConcoleUI {
 		input = new Scanner(System.in);
 		String playerName = input.next();
 		
-		int playerId = new PlayerUtil().checkName(playerName);
-		int gameId = new GameUtil().checkGame(gameName);
+		PlayerHibernate player = new PlayerJpa().checkPlayer(playerName);
+		GameHibernate game = new GameJpa().checkGame(gameName);
 		
-		ScoreImpl scoreimpl = new ScoreImpl();
-		Score score = new Score(playerId, gameId, trueScore);
-		scoreimpl.addScore(score);
+		ScoreHibernate scoreHib = new ScoreHibernate();
+		scoreHib.setScore(trueScore);
+		scoreHib.setPlayer(player);
+		scoreHib.setGame(game);
 		
-		List<Score> scoreList = scoreimpl.printTopTenScore(gameName);
+		ScoreJpa sj = new ScoreJpa();
+		sj.addScore(scoreHib);
+
+		List<ScoreHibernate> scoreList = sj.printTopTenScore(gameName);
 		System.out.println("Score for game: " + gameName);
-		for (int i = 0; i < scoreList.size(); i++) {
-			System.out.println(i + ". " + scoreList.get(i).getPlayerName() + " - " + scoreList.get(i).getScore());
+		for (int i = 0; i < 10; i++) {
+			System.out.printf((i+1) + ". " + scoreList.get(i).getPlayer().getPlayerName() + ": " + scoreList.get(i).getScore() + "\n");
 		}
 		System.out.println();
-		rating(playerId, gameId, playerName, gameName);
-		comment(playerId, gameId, gameName);
+		rating(playerName, gameName);
+		comment(playerName, gameName);
 	}
 
-	private void rating(int playerId, int gameId, String playerName,String gameName) {
+	private void rating(String playerName,String gameName) {
 		System.out.println("Do you want rate this game?  Press 'y' for yes");
 		input = new Scanner(System.in);
 		String option = input.next();
@@ -50,20 +56,22 @@ public class GamesConcoleUI {
 			input = new Scanner(System.in);
 			int rate = input.nextInt();
 			
-			Rating rating = new Rating(playerId, gameId, rate);
-			RatingImpl ratingimpl = new RatingImpl();
-			ratingimpl.checkRating(rating, playerName, gameName);
+			PlayerHibernate player = new PlayerJpa().checkPlayer(playerName);
+			GameHibernate game = new GameJpa().checkGame(gameName);
+			RatingJpa rj = new RatingJpa();
 			
-			List<Rating> avgList = ratingimpl.avgRating(gameName);
-			List<Rating> countList = ratingimpl.countRating(gameName);
-			System.out.println("Rating for game: " + gameName);
-			for (int i = 0; i < avgList.size(); i++) {
-				System.out.println("Average rating: " + avgList.get(i).getRating() + " Count rating: " + countList.get(i).getRating() + "\n\n");
-			}
+			RatingHibernate ratingHib = new RatingHibernate();
+			ratingHib.setRating(rate);
+			ratingHib.setPlayer(player);
+			ratingHib.setGame(game);
+			rj.addRating(ratingHib);
+			
+			System.out.println("Average is: " + rj.avgRating(gameName));
+			System.out.println("Count is: " + rj.countRating(gameName));
 		}
 	}
 
-	private void comment(int playerId, int gameId, String gameName) {
+	private void comment(String playerName, String gameName) {
 		System.out.println("Do you want comment this game? Press 'y' for yes");
 		input = new Scanner(System.in);
 		String option = input.next();
@@ -73,14 +81,21 @@ public class GamesConcoleUI {
 			input = new Scanner(System.in);
 			String comment = input.nextLine();
 			
-			Comments com = new Comments(playerId, gameId, comment);
-			CommentImpl commentImpl = new CommentImpl();
-			commentImpl.addComment(com);
+			PlayerHibernate player = new PlayerJpa().checkPlayer(playerName);
+			GameHibernate game = new GameJpa().checkGame(gameName);
 			
-			List<Comments> commentList = commentImpl.printComments(gameName);
+			CommentsHibernate comHib = new CommentsHibernate();
+			comHib.setComment(comment);
+			comHib.setPlayer(player);
+			comHib.setGame(game);
+			
+			CommentJpa cj = new CommentJpa();
+			cj.addComment(comHib);
+			
+			List<CommentsHibernate> commentList = cj.printComments(gameName);
 			System.out.println("Comments for game: " + gameName);
 			for (int i = 0; i < commentList.size(); i++) {
-				System.out.println(commentList.get(i).getPlayerName() + ": " + commentList.get(i).getComment());
+				System.out.println(commentList.get(i).getPlayer().getPlayerName() + ": " + commentList.get(i).getComment());
 			}
 			System.out.println();
 		}

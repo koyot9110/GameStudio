@@ -5,9 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import sk.tsystems.gamestudio.entity.Score;
-import sk.tsystems.gamestudio.entityjpa.GameHibernate;
-import sk.tsystems.gamestudio.entityjpa.PlayerHibernate;
 import sk.tsystems.gamestudio.entityjpa.ScoreHibernate;
 import sk.tsystems.gamestudio.service.interfaces.ScoreInterface;
 import sk.tsystems.jpa.JpaHelper;
@@ -15,45 +12,24 @@ import sk.tsystems.jpa.JpaHelper;
 public class ScoreJpa implements ScoreInterface{
 
 	@Override
-	public void addScore(Score score) {
-		
-		ScoreHibernate scoreHib = new ScoreHibernate();
-		scoreHib.setScore(score.getScore());
-		
-		PlayerHibernate playerHib = new PlayerHibernate();
-		playerHib.setPlayerId(score.getplayerId());
-		scoreHib.setPlayer(playerHib);
-		
-		GameHibernate gameHib =  new GameHibernate();
-		gameHib.setGameId(score.getGameId());
-		scoreHib.setGame(gameHib);
+	public void addScore(ScoreHibernate score) {
 		
 		JpaHelper.beginTransaction();
 		EntityManager em = JpaHelper.getEntityManager();
-		em.persist(scoreHib);
+		em.persist(score);
 		JpaHelper.commitTransaction();
-	}
-
-	@Override
-	public List<Score> printTopTenScore(String game) {
-		
-		JpaHelper.beginTransaction();
-		EntityManager em = JpaHelper.getEntityManager();
-		JpaHelper.commitTransaction();
-
-		Query query = em.createQuery("SELECT s FROM ScoreHibernate c JOIN c.game g where g.gameName=:gameName");
-		query.setParameter("gameName", game);
-		return query.getResultList();
 	}
 	
-	public List<ScoreHibernate> printTopTenScores(String game) {
+	@Override
+	public List<ScoreHibernate> printTopTenScore(String game) {
 		
 		JpaHelper.beginTransaction();
 		EntityManager em = JpaHelper.getEntityManager();
 		JpaHelper.commitTransaction();
 
-		Query query = em.createQuery("SELECT s FROM ScoreHibernate c JOIN c.game g where g.gameName=:gameName");
+		Query query = em.createQuery("SELECT s FROM ScoreHibernate s JOIN s.game g WHERE g.gameName=:gameName ORDER BY s.score DESC");
 		query.setParameter("gameName", game);
 		return query.getResultList();
 	}
 }
+//public static final String SELECT_SCORE = "SELECT * FROM (SELECT p.PLAYERNAME, g.GAMENAME, s.score FROM player p JOIN score s ON p.PLAYERID = s.PLAYERID JOIN game g ON s.GAMEID = g.GAMEID ORDER BY s.score DESC) WHERE ROWNUM <=10  AND GAMENAME like ?";

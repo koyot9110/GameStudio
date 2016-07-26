@@ -12,6 +12,10 @@ public class GameHibernate {
 	private int gameId;
 	private String gameName;
 	
+	public GameHibernate(String gameName) {
+		this.gameName = gameName;
+	}
+
 	public GameHibernate() {
 
 	}
