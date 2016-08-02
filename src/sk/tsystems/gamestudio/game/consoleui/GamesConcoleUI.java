@@ -38,7 +38,7 @@ public class GamesConcoleUI {
 
 		List<ScoreHibernate> scoreList = sj.printTopTenScore(gameName);
 		System.out.println("Score for game: " + gameName);
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 3; i++) {
 			System.out.printf((i+1) + ". " + scoreList.get(i).getPlayer().getPlayerName() + ": " + scoreList.get(i).getScore() + "\n");
 		}
 		System.out.println();
@@ -64,7 +64,7 @@ public class GamesConcoleUI {
 			ratingHib.setRating(rate);
 			ratingHib.setPlayer(player);
 			ratingHib.setGame(game);
-			rj.addRating(ratingHib);
+			rj.checkRating(ratingHib);
 			
 			System.out.println("Average is: " + rj.avgRating(gameName));
 			System.out.println("Count is: " + rj.countRating(gameName));
